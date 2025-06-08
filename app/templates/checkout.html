@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="mb-4">{{ title }}</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Order Summary</h4>
+            <ul class="list-group mb-3">
+                {% for product, quantity in display_cart.items() %}
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                        <h6 class="my-0">{{ product.name }} (x{{ quantity }})</h6>
+                    </div>
+                    <span class="text-muted">Rp {{ "{:,.0f}".format(product.price * quantity) }}</span>
+                </li>
+                {% endfor %}
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (IDR)</span>
+                    <strong>Rp {{ "{:,.0f}".format(total) }}</strong>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h4>Shipping Information</h4>
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <div class="form-group mb-3">
+                    {{ form.name.label(class="form-control-label") }}
+                    {{ form.name(class="form-control") }}
+                </div>
+                 <div class="form-group mb-3">
+                    {{ form.address.label(class="form-control-label") }}
+                    {{ form.address(class="form-control") }}
+                </div>
+                 <div class="form-group mb-3">
+                    {{ form.phone.label(class="form-control-label") }}
+                    {{ form.phone(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary w-100") }}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

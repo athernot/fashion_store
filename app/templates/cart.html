@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="mb-4">{{ title }}</h1>
+    {% if display_cart %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Subtotal</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product, quantity in display_cart.items() %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>Rp {{ "{:,.0f}".format(product.price) }}</td>
+                    <td>{{ quantity }}</td>
+                    <td>Rp {{ "{:,.0f}".format(product.price * quantity) }}</td>
+                    <td>
+                        <a href="{{ url_for('main.remove_from_cart', product_id=product.id) }}" class="btn btn-danger btn-sm">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr class="fw-bold">
+                    <td colspan="3" class="text-end">Total:</td>
+                    <td>Rp {{ "{:,.0f}".format(total) }}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="text-end">
+            <a href="{{ url_for('main.checkout') }}" class="btn btn-success btn-lg">Proceed to Checkout</a>
+        </div>
+    {% else %}
+        <div class="alert alert-info">Your cart is empty. <a href="{{ url_for('main.catalog') }}">Start shopping!</a></div>
+    {% endif %}
+{% endblock content %}

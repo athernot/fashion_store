@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="mb-4">{{ title }}</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">User Information</h5>
+            <p><strong>Username:</strong> {{ current_user.username }}</p>
+            <p><strong>Email:</strong> {{ current_user.email }}</p>
+        </div>
+    </div>
+
+    <h3 class="mt-5 mb-3">My Order History</h3>
+    {% if orders %}
+        <div class="accordion" id="ordersAccordion">
+            {% for order in orders %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading{{order.id}}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{order.id}}">
+                        Order #{{ order.id }} - {{ order.date_posted.strftime('%Y-%m-%d') }} - Total: Rp {{ "{:,.0f}".format(order.total_price) }}
+                    </button>
+                </h2>
+                <div id="collapse{{order.id}}" class="accordion-collapse collapse" data-bs-parent="#ordersAccordion">
+                    <div class="accordion-body">
+                        <ul class="list-group">
+                            {% for item in order.items %}
+                            <li class="list-group-item">
+                                {{ item.product.name }} - Quantity: {{ item.quantity }} @ Rp {{ "{:,.0f}".format(item.price_per_item) }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You haven't placed any orders yet.</p>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="p-5 mb-4 bg-light rounded-3 text-center">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">New Season Arrivals</h1>
+            <p class="fs-4">Check out all the new trends</p>
+            <a href="{{ url_for('main.catalog') }}" class="btn btn-primary btn-lg" type="button">Shop Now</a>
+        </div>
+    </div>
+
+    <h2 class="text-center mb-4">Featured Products</h2>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-3">
+            <div class="card mb-4 product-card">
+                <img src="http://placehold.it/500x325" class="card-img-top" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">Rp {{ "{:,.0f}".format(product.price) }}</p>
+                    <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="btn btn-outline-secondary">View</a>
+                    <a href="{{ url_for('main.add_to_cart', product_id=product.id) }}" class="btn btn-primary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

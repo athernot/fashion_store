@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 class="mb-4">{{ title }}</h1>
+    <div class="row">
+        {% for product in products.items %}
+        <div class="col-md-4">
+            <div class="card mb-4 product-card">
+                <img src="http://placehold.it/500x325" class="card-img-top" alt="{{ product.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="card-text">Rp {{ "{:,.0f}".format(product.price) }}</p>
+                    <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="btn btn-outline-secondary">View</a>
+                    <a href="{{ url_for('main.add_to_cart', product_id=product.id) }}" class="btn btn-primary">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        {% for page_num in products.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if page_num %}
+            {% if products.page == page_num %}
+              <li class="page-item active"><a class="page-link" href="{{ url_for('main.catalog', page=page_num) }}">{{ page_num }}</a></li>
+            {% else %}
+              <li class="page-item"><a class="page-link" href="{{ url_for('main.catalog', page=page_num) }}">{{ page_num }}</a></li>
+            {% endif %}
+          {% else %}
+            ...
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+{% endblock content %}
