@@ -2,39 +2,51 @@
 {% block content %}
     <h1 class="mb-4">{{ title }}</h1>
     {% if display_cart %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Product</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Subtotal</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for product, quantity in display_cart.items() %}
-                <tr>
-                    <td>{{ product.name }}</td>
-                    <td>Rp {{ "{:,.0f}".format(product.price) }}</td>
-                    <td>{{ quantity }}</td>
-                    <td>Rp {{ "{:,.0f}".format(product.price * quantity) }}</td>
-                    <td>
-                        <a href="{{ url_for('main.remove_from_cart', product_id=product.id) }}" class="btn btn-danger btn-sm">Remove</a>
-                    </td>
-                </tr>
-                {% endfor %}
-                <tr class="fw-bold">
-                    <td colspan="3" class="text-end">Total:</td>
-                    <td>Rp {{ "{:,.0f}".format(total) }}</td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="text-end">
-            <a href="{{ url_for('main.checkout') }}" class="btn btn-success btn-lg">Proceed to Checkout</a>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col" class="text-end">Price</th>
+                        <th scope="col" class="text-center">Quantity</th>
+                        <th scope="col" class="text-end">Subtotal</th>
+                        <th scope="col" class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product, quantity in display_cart.items() %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="https://placehold.co/100x65/EEE/31343C?text={{ product.name|replace(' ', '+') }}" class="img-thumbnail me-3" style="width: 100px;" alt="{{ product.name }}">
+                                <span>{{ product.name }}</span>
+                            </div>
+                        </td>
+                        <td class="text-end">Rp {{ "{:,.0f}".format(product.price) }}</td>
+                        <td class="text-center">{{ quantity }}</td>
+                        <td class="text-end">Rp {{ "{:,.0f}".format(product.price * quantity) }}</td>
+                        <td class="text-center">
+                            <a href="{{ url_for('main.remove_from_cart', product_id=product.id) }}" class="btn btn-danger btn-sm">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="fw-bold fs-5">
+                        <td colspan="3" class="text-end border-0">Total:</td>
+                        <td class="text-end border-0">Rp {{ "{:,.0f}".format(total) }}</td>
+                        <td class="border-0"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-end mt-4">
+            <a href="{{ url_for('main.catalog') }}" class="btn btn-outline-secondary btn-lg me-2">Continue Shopping</a>
+            <a href="{{ url_for('main.checkout') }}" class="btn btn-primary btn-lg">Proceed to Checkout</a>
         </div>
     {% else %}
-        <div class="alert alert-info">Your cart is empty. <a href="{{ url_for('main.catalog') }}">Start shopping!</a></div>
+        <div class="text-center py-5">
+            <h2>Your Cart is Empty</h2>
+            <p class="lead text-muted">Looks like you haven't added anything to your cart yet.</p>
+            <a href="{{ url_for('main.catalog') }}" class="btn btn-primary mt-3">Start Shopping</a>
+        </div>
     {% endif %}
 {% endblock content %}

@@ -1,43 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
     <h1 class="mb-4">{{ title }}</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <h4>Order Summary</h4>
+    <div class="row g-5">
+        <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-primary">Your cart</span>
+                <span class="badge bg-primary rounded-pill">{{ display_cart|length }}</span>
+            </h4>
             <ul class="list-group mb-3">
                 {% for product, quantity in display_cart.items() %}
                 <li class="list-group-item d-flex justify-content-between lh-sm">
                     <div>
-                        <h6 class="my-0">{{ product.name }} (x{{ quantity }})</h6>
+                        <h6 class="my-0">{{ product.name }}</h6>
+                        <small class="text-muted">Quantity: {{ quantity }}</small>
                     </div>
                     <span class="text-muted">Rp {{ "{:,.0f}".format(product.price * quantity) }}</span>
                 </li>
                 {% endfor %}
-                <li class="list-group-item d-flex justify-content-between">
+                <li class="list-group-item d-flex justify-content-between bg-light">
                     <span>Total (IDR)</span>
                     <strong>Rp {{ "{:,.0f}".format(total) }}</strong>
                 </li>
             </ul>
         </div>
-        <div class="col-md-6">
-            <h4>Shipping Information</h4>
-            <form method="POST" action="">
+        <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Shipping Information</h4>
+            <form method="POST" action="" class="needs-validation" novalidate>
                 {{ form.hidden_tag() }}
-                <div class="form-group mb-3">
-                    {{ form.name.label(class="form-control-label") }}
-                    {{ form.name(class="form-control") }}
+                <div class="row g-3">
+                    <div class="col-12">
+                        {{ form.name.label(class="form-label") }}
+                        {{ form.name(class="form-control", placeholder="Full Name", value=current_user.username) }}
+                    </div>
+                     <div class="col-12">
+                        {{ form.address.label(class="form-label") }}
+                        {{ form.address(class="form-control", placeholder="1234 Main St") }}
+                    </div>
+                     <div class="col-12">
+                        {{ form.phone.label(class="form-label") }}
+                        {{ form.phone(class="form-control", placeholder="+62 812 3456 7890") }}
+                    </div>
                 </div>
-                 <div class="form-group mb-3">
-                    {{ form.address.label(class="form-control-label") }}
-                    {{ form.address(class="form-control") }}
-                </div>
-                 <div class="form-group mb-3">
-                    {{ form.phone.label(class="form-control-label") }}
-                    {{ form.phone(class="form-control") }}
-                </div>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-primary w-100") }}
-                </div>
+                <hr class="my-4">
+                {{ form.submit(class="w-100 btn btn-primary btn-lg", value="Place Order") }}
             </form>
         </div>
     </div>

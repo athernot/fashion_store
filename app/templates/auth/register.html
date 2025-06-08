@@ -3,11 +3,11 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body p-4">
                     <form method="POST" action="">
                         {{ form.hidden_tag() }}
                         <fieldset class="form-group">
-                            <legend class="border-bottom mb-4">Join Today</legend>
+                            <legend class="border-bottom mb-4 text-center h3">Join ATHERZ.CO</legend>
                             <div class="form-group mb-3">
                                 {{ form.username.label(class="form-control-label") }}
                                 {{ form.username(class="form-control form-control-lg") }}
@@ -26,14 +26,14 @@
                             </div>
                         </fieldset>
                         <div class="form-group">
-                            {{ form.submit(class="btn btn-outline-info") }}
+                            {{ form.submit(class="btn btn-primary w-100 btn-lg") }}
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="border-top pt-3 mt-3">
+            <div class="text-center pt-3 mt-3">
                 <small class="text-muted">
-                    Already Have An Account? <a class="ml-2" href="{{ url_for('main.login') }}">Sign In</a>
+                    Already Have An Account? <a class="ms-2" href="{{ url_for('main.login') }}">Sign In</a>
                 </small>
             </div>
         </div>

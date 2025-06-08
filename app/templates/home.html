@@ -3,7 +3,7 @@
     <div class="p-5 mb-4 bg-light rounded-3 text-center">
         <div class="container-fluid py-5">
             <h1 class="display-5 fw-bold">New Season Arrivals</h1>
-            <p class="fs-4">Check out all the new trends</p>
+            <p class="fs-4">Discover the latest trends in modern fashion.</p>
             <a href="{{ url_for('main.catalog') }}" class="btn btn-primary btn-lg" type="button">Shop Now</a>
         </div>
     </div>
@@ -11,14 +11,17 @@
     <h2 class="text-center mb-4">Featured Products</h2>
     <div class="row">
         {% for product in products %}
-        <div class="col-md-3">
-            <div class="card mb-4 product-card">
-                <img src="http://placehold.it/500x325" class="card-img-top" alt="{{ product.name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text">Rp {{ "{:,.0f}".format(product.price) }}</p>
-                    <a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="btn btn-outline-secondary">View</a>
-                    <a href="{{ url_for('main.add_to_cart', product_id=product.id) }}" class="btn btn-primary">Add to Cart</a>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100 product-card">
+                <a href="{{ url_for('main.product_detail', product_id=product.id) }}">
+                    <img src="https://placehold.co/500x325/EEE/31343C?text={{ product.name|replace(' ', '+') }}" class="card-img-top" alt="{{ product.name }}">
+                </a>
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title"><a href="{{ url_for('main.product_detail', product_id=product.id) }}" class="text-dark text-decoration-none">{{ product.name }}</a></h5>
+                    <p class="card-text fw-bold">Rp {{ "{:,.0f}".format(product.price) }}</p>
+                    <div class="mt-auto">
+                        <a href="{{ url_for('main.add_to_cart', product_id=product.id) }}" class="btn btn-primary w-100">Add to Cart</a>
+                    </div>
                 </div>
             </div>
         </div>
